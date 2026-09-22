@@ -1,16 +1,23 @@
-const express = require('express');
-const {
+import express from "express";
+import {
   createDelivery,
-  getAllDeliveries,
-  getDeliveryById,
-  updateDeliveryStatus,
-} = require('../controllers/deliveryController');
-const protect = require('../middleware/authMiddleware');
-const authorize = require('../middleware/roleMiddleware');
+  getDeliveries,
+  getDeliveryByTrackingId,
+  assignRider,
+  updateStatus,
+} from "../controllers/deliveryController.js";
+import { protect } from "../middleware/authMiddleware.js";
+import { authorize } from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
-router.route('/').post(protect, authorize('admin', 'customer'), createDelivery).get(protect, getAllDeliveries);
-router.route('/:id').get(protect, getDeliveryById).put(protect, authorize('admin', 'rider'), updateDeliveryStatus);
+router.get("/track/:trackingId", getDeliveryByTrackingId);
 
-module.exports = router;
+router.use(protect);
+
+router.post("/", authorize("admin"), createDelivery);
+router.get("/", authorize("admin", "rider"), getDeliveries);
+router.patch("/:id/assign", authorize("admin"), assignRider);
+router.patch("/:id/status", authorize("admin", "rider"), updateStatus);
+
+export default router;

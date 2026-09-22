@@ -1,35 +1,36 @@
-const User = require('../models/User');
-const Delivery = require('../models/Delivery');
+import User from "../models/User.js";
 
-const getAvailableRiders = async (req, res) => {
+export const getRiders = async (req, res, next) => {
   try {
-    const riders = await User.find({ role: 'rider', isActive: true });
+    const riders = await User.find({ role: "rider" }).select("-password");
     res.json(riders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    next(err);
   }
 };
 
-const assignDeliveryToRider = async (req, res) => {
+export const updateRiderLocation = async (req, res, next) => {
   try {
-    const { riderId } = req.body;
-    const delivery = await Delivery.findByIdAndUpdate(
-      req.params.id,
-      { rider: riderId, status: 'assigned' },
-      { new: true }
-    );
+    const { lat, lng } = req.body;
 
-    if (!delivery) {
-      return res.status(404).json({ message: 'Delivery not found' });
+    if (req.user._id.toString() !== req.params.id && req.user.role !== "admin") {
+      return res.status(403).json({ message: "Not authorized" });
     }
 
-    res.json(delivery);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    const rider = await User.findOneAndUpdate(
+      { _id: req.params.id, role: "rider" },
+      { currentLocation: { lat, lng } },
+      { new: true }
+    ).select("-password");
 
-module.exports = {
-  getAvailableRiders,
-  assignDeliveryToRider,
+    if (!rider) {
+      return res.status(404).json({ message: "Rider not found" });
+    }
+
+    req.app.get("io")?.emit("rider:location", { riderId: rider._id, lat, lng });
+
+    res.json(rider);
+  } catch (err) {
+    next(err);
+  }
 };

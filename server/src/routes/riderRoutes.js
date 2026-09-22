@@ -1,11 +1,13 @@
-const express = require('express');
-const { getAvailableRiders, assignDeliveryToRider } = require('../controllers/riderController');
-const protect = require('../middleware/authMiddleware');
-const authorize = require('../middleware/roleMiddleware');
+import express from "express";
+import { getRiders, updateRiderLocation } from "../controllers/riderController.js";
+import { protect } from "../middleware/authMiddleware.js";
+import { authorize } from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
-router.get('/available', protect, authorize('admin'), getAvailableRiders);
-router.put('/assign/:id', protect, authorize('admin'), assignDeliveryToRider);
+router.use(protect);
 
-module.exports = router;
+router.get("/", authorize("admin"), getRiders);
+router.patch("/:id/location", authorize("admin", "rider"), updateRiderLocation);
+
+export default router;

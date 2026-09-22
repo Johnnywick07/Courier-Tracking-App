@@ -1,29 +1,15 @@
-const socketIo = require('socket.io');
-
-const initializeTrackingSocket = (server) => {
-  const io = socketIo(server, {
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST'],
-    },
-  });
-
-  io.on('connection', (socket) => {
-    console.log('Client connected:', socket.id);
-
-    socket.on('joinDeliveryRoom', (deliveryId) => {
-      socket.join(deliveryId);
-      console.log(`Socket ${socket.id} joined room ${deliveryId}`);
+const trackingSocket = (io) => {
+  io.on("connection", (socket) => {
+    socket.on("joinTracking", (trackingId) => {
+      if (trackingId) socket.join(trackingId);
     });
 
-    socket.on('locationUpdate', ({ deliveryId, location }) => {
-      io.to(deliveryId).emit('deliveryLocationUpdate', { deliveryId, location });
+    socket.on("leaveTracking", (trackingId) => {
+      if (trackingId) socket.leave(trackingId);
     });
 
-    socket.on('disconnect', () => {
-      console.log('Client disconnected:', socket.id);
-    });
+    socket.on("disconnect", () => {});
   });
 };
 
-module.exports = initializeTrackingSocket;
+export default trackingSocket;
