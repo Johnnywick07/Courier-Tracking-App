@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { register, login, getMe } from "../controllers/authController.js";
+import { register, login, getMe, forgotPassword, resetPassword } from "../controllers/authController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -16,6 +16,8 @@ router.post(
 );
 
 router.post("/login", login);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 router.get("/me", protect, getMe);
 
 export default router;

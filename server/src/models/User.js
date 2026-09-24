@@ -12,11 +12,14 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "rider", "customer"],
       default: "customer",
     },
+    // rider-specific fields
     isAvailable: { type: Boolean, default: true },
     currentLocation: {
       lat: { type: Number },
       lng: { type: Number },
     },
+    resetPasswordToken: { type: String, select: false },
+    resetPasswordExpires: { type: Date, select: false },
   },
   { timestamps: true }
 );
