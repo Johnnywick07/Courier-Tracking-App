@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-
+// Define status labels for different delivery statuses
 const STATUS_LABELS = {
   created: 'Awaiting pickup',
   picked_up: 'Picked up',
@@ -8,7 +8,7 @@ const STATUS_LABELS = {
   delivered: 'Delivered',
   failed: 'Failed',
 }
-
+// DeliveryCard component to display delivery information
 export default function DeliveryCard({ delivery }) {
   return (
     <article className="card delivery-card">
