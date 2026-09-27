@@ -11,7 +11,7 @@ import CreateDelivery from './pages/CreateDelivery'
 import DeliveryDetails from './pages/DeliveryDetails'
 import TrackSearch from './pages/TrackSearch'
 import RiderPanel from './pages/RiderPanel'
-
+// ProtectedRoute component to restrict access to certain routes based on user roles
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth()
   if (loading) return null

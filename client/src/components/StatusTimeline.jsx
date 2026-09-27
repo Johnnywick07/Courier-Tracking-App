@@ -7,6 +7,7 @@ const STATUS_LABELS = {
   failed: 'Failed',
 }
 
+// StatusTimeline component to display delivery status updates
 export default function StatusTimeline({ history = [] }) {
   if (!history.length) {
     return <p className="muted">No status updates yet.</p>

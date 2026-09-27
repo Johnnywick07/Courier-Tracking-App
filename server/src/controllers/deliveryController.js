@@ -1,6 +1,7 @@
 import Delivery, { DELIVERY_STAGES } from "../models/Delivery.js";
 import User from "../models/User.js";
 
+// Controller functions for managing deliveries
 export const createDelivery = async (req, res, next) => {
   try {
     const { sender, receiver, parcel } = req.body;

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
+// Navbar component for displaying navigation links
 export default function Navbar() {
   const { user, logout } = useAuth()
   return (

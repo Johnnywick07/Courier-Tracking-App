@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 
+// Controller functions for managing riders
 export const getRiders = async (req, res, next) => {
   try {
     const riders = await User.find({ role: "rider" }).select("-password");
