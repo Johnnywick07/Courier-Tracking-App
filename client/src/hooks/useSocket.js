@@ -8,7 +8,7 @@ export default function useSocket(trackingId) {
 
   useEffect(() => {
     if (!trackingId) return undefined
-    const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000')
+    const socket = io(import.meta.env.VITE_SOCKET_URL || undefined)
 
     socket.emit('joinTracking', trackingId)
     socket.on('tracking:update', (delivery) => {
