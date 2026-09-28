@@ -1,3 +1,4 @@
+//this is route for user forget password//
 import express from "express";
 import { body } from "express-validator";
 import { register, login, getMe, forgotPassword, resetPassword } from "../controllers/authController.js";
