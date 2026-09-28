@@ -1,0 +1,25 @@
+@'
+import dotenv from "dotenv";
+dotenv.config();
+import connectDB from "./src/config/db.js";
+import User from "./src/models/User.js";
+import mongoose from "mongoose";
+
+const upsertUser = async (data) => {
+  let user = await User.findOne({ email: data.email });
+  if (!user) {
+    user = await User.create(data);
+  }
+  return user;
+};
+
+const run = async () => {
+  await connectDB();
+  const admin = await upsertUser({ name: "Admin", email: "admin@courier.com", password: "admin123", role: "admin" });
+  const rider = await upsertUser({ name: "Rider One", email: "rider@courier.com", password: "rider123", role: "rider" });
+  console.log("Seeded:", admin.email, rider.email);
+  await mongoose.disconnect();
+};
+
+run();
+'@ | Out-File -FilePath seed.js -Encoding utf8
