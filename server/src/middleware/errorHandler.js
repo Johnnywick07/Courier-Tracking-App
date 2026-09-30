@@ -1,6 +1,8 @@
+// responds with a 404 error if the requested route is not found
 export const notFound = (req, res, next) => {
   res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
 };
+
 // Error handler middleware
 export const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
