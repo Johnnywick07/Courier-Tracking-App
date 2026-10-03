@@ -1,3 +1,4 @@
+//this middleware restricts a route to certain roles
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {

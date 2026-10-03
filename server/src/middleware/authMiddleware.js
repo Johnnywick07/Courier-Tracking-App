@@ -1,3 +1,5 @@
+//this middleware protects routes that needs a login. It checks the user's token and attaches the logged-in user to the request or returns 401 if invalid
+
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
