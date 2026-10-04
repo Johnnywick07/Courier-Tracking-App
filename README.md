@@ -3,7 +3,7 @@
 A full-stack MERN application for creating deliveries, assigning riders, and tracking
 parcels through their delivery stages in real time.
 
-**Live demo:** _add your Render URL here once deployed_
+**Live demo:** https://courier-tracking-app-0oc0.onrender.com
 
 ## Features
 
