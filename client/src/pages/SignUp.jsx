@@ -75,14 +75,14 @@ export default function SignUp() {
               required
             />
           </label>
-          <label>
-            Account type
-            <select value={role} onChange={(event) => setRole(event.target.value)}>
-              <option value="customer">Customer</option>
-              <option value="rider">Rider</option>
-              <option value="admin">Admin</option>
-            </select>
-          </label>
+         <label>
+  Account type
+  <select value={role} onChange={(event) => setRole(event.target.value)}>
+    <option value="customer">Customer</option>
+    <option value="rider">Rider</option>
+    <option value="admin">Admin</option>
+  </select>
+</label>
           {error && <p className="error-text">{error}</p>}
           <button className="button" type="submit" disabled={submitting}>
             {submitting ? 'Creating account…' : 'Create account'}

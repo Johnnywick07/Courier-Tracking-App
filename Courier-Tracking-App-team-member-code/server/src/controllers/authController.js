@@ -18,7 +18,7 @@ export const register = async (req, res, next) => {
       email,
       password,
       phone,
-      role: ["admin", "rider", "customer"].includes(role) ? role : "customer",
+          role: "customer", // public signups are always customers; admin/rider accounts are created separately
     });
 
     res.status(201).json({
